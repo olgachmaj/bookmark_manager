@@ -1,18 +1,16 @@
 require 'pg'
 
-describe Bookmarks do
+describe Bookmark do
 
   describe '.all' do
     it 'connects to the database and shows all of the inputs' do
       connection = PG.connect(dbname: 'bookmark_manager_test')
 
-      connection.exec("INSERT INTO bookmarks (url) VALUES ('http://www.makersacademy.com');")
-      connection.exec("INSERT INTO bookmarks (url) VALUES('http://www.destroyallsoftware.com');")
-      connection.exec("INSERT INTO bookmarks (url) VALUES('http://www.google.com');")
 
-      bookmarks = Bookmarks.all
+      bookmark = Bookmark.add(url: 'Google', title: 'www.google.com')
+      bookmarks = Bookmark.all
 
-      expect(bookmarks).to include ('http://www.google.com' )
+      expect(bookmarks).to include bookmark.first
     end
   end
 
@@ -20,11 +18,10 @@ describe Bookmarks do
      it 'adds new bookmark to the database' do
 
        connection = PG.connect(dbname: 'bookmark_manager_test')
-       Bookmarks.add('http://www.google.com')
+       bookmark = Bookmark.add(url: 'http://www.testbookmark.com', title: 'Test Bookmark').first
 
-       bookmarks = Bookmarks.all
-
-       expect(bookmarks).to include ('http://www.google.com')
+       expect(bookmark['url']).to eq 'http://www.testbookmark.com'
+       expect(bookmark['title']).to eq 'Test Bookmark'
      end
   end
 

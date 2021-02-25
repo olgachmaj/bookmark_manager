@@ -8,19 +8,19 @@ get '/' do
 end
 
 get '/bookmarks' do
-  @list = Bookmarks.all
+  @list = Bookmark.all
   erb :index
 end
 
 get '/bookmarks/new' do
-  @list = Bookmarks.all
+  @list = Bookmark.all
   erb :new
 end
 
 post '/add-new' do
   p params
   p "Form data submitted to the /bookmarks route!"
-  Bookmarks.add(params[:new])
+  @bookmark = Bookmark.add(url: params[:url], title: params[:title])
   redirect '/bookmarks'
 end
 
