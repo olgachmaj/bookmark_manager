@@ -33,4 +33,14 @@ describe '.add' do
     expect(bookmark.url).to eq 'http://www.testbookmark.com'
   end
 end
+
+describe '.delete' do
+  it 'deletes a boomark' do
+    bookmark = Bookmark.add(url: 'http://www.testbookmark.com', title: 'Test Bookmark')
+    persisted_data = persisted_data(id: bookmark.id)
+    
+    Bookmark.delete(id: bookmark.id)
+    expect(bookmark).to eq(nil)
+  end
+end
 end
