@@ -1,5 +1,5 @@
 require 'pg'
-# Rack::MethodOverride
+
 class Bookmark
 
   attr_reader :id, :title, :url
@@ -16,7 +16,7 @@ class Bookmark
     else
       connection = PG.connect(dbname: 'bookmark_manager')
     end
-      p connection.exec("DELETE FROM bookmarks WHERE id = #{id};")
+      connection.exec("DELETE FROM bookmarks WHERE id = #{id}")
   end
 
 

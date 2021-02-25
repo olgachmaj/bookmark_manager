@@ -3,6 +3,8 @@ require './lib/bookmark'
 
 class BookmarkManager < Sinatra::Base
 
+  enable :sessions, :method_override
+
 get '/' do
   'Hello'
 end
@@ -18,12 +20,17 @@ get '/bookmarks/new' do
 end
 
 post '/add-new' do
-  p params
-  p "Form data submitted to the /bookmarks route!"
+  params
+  "Form data submitted to the /bookmarks route!"
   @bookmark = Bookmark.add(url: params[:url], title: params[:title])
   redirect '/bookmarks'
 end
 
+
+delete '/bookmarks/:id' do
+  Bookmark.delete(id: params[:id])
+  redirect '/bookmarks'
+end
 
 
 run! if app_file == $0

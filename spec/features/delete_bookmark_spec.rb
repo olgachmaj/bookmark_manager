@@ -7,6 +7,6 @@ feature 'deleting a bookmark' do
     click_button('Submit')
 
     click_button('delete')
-    expect(page).not_to have_content('Test Bookmark')
+     expect(page).to have_no_link 'Test Bookmark', href: 'http://www.testbookmark.com'
   end
 end
